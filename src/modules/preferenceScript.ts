@@ -29,10 +29,7 @@ export async function registerPrefsScripts(_window: Window) {
 
 function getPrefValue(key: string): string {
   try {
-    const value = Zotero.Prefs.get(
-      `${config.prefsPrefix}.${key}`,
-      true,
-    );
+    const value = Zotero.Prefs.get(`${config.prefsPrefix}.${key}`, true);
     return value !== undefined && value !== null ? String(value) : "";
   } catch {
     return "";
@@ -58,7 +55,9 @@ function getCsvFieldsConfig(): Array<{
       const parsed = JSON.parse(configStr);
       if (Array.isArray(parsed) && parsed.length > 0) {
         // Reorder to match the canonical order, preserving user's header/enabled state
-        const fieldMap = new Map<string, any>(parsed.map((f: any) => [f.field, f]));
+        const fieldMap = new Map<string, any>(
+          parsed.map((f: any) => [f.field, f]),
+        );
         const reordered: any[] = [];
         for (const field of CSV_FIELD_ORDER) {
           const config = fieldMap.get(field);
@@ -103,7 +102,8 @@ function createSelectionRow(
   enabled: boolean,
 ): HTMLElement {
   const wrapper = doc.createElement("div");
-  wrapper.style.cssText = "display: flex; align-items: center; gap: 4px; height: 28px;";
+  wrapper.style.cssText =
+    "display: flex; align-items: center; gap: 4px; height: 28px;";
 
   const checkbox = doc.createElement("input");
   checkbox.type = "checkbox";
@@ -229,19 +229,21 @@ function renderSelectionSection(doc: Document) {
   });
 
   // Bind change events for selection checkboxes
-  container.querySelectorAll('input[type="checkbox"]').forEach((cb: Element) => {
-    cb.addEventListener("change", () => {
-      const fields = getCsvFieldsConfig();
-      const changedField = (cb as HTMLInputElement).dataset.field;
-      const fieldConfig = fields.find((f) => f.field === changedField);
-      if (fieldConfig) {
-        fieldConfig.enabled = (cb as HTMLInputElement).checked;
-        saveCsvFieldsConfig(fields);
-        // Re-render order section to reflect selection changes
-        renderOrderSection(doc);
-      }
+  container
+    .querySelectorAll('input[type="checkbox"]')
+    .forEach((cb: Element) => {
+      cb.addEventListener("change", () => {
+        const fields = getCsvFieldsConfig();
+        const changedField = (cb as HTMLInputElement).dataset.field;
+        const fieldConfig = fields.find((f) => f.field === changedField);
+        if (fieldConfig) {
+          fieldConfig.enabled = (cb as HTMLInputElement).checked;
+          saveCsvFieldsConfig(fields);
+          // Re-render order section to reflect selection changes
+          renderOrderSection(doc);
+        }
+      });
     });
-  });
 }
 
 function renderOrderSection(doc: Document) {
@@ -257,7 +259,8 @@ function renderOrderSection(doc: Document) {
   if (!enabledFields.length) {
     const emptyMsg = doc.createElement("div");
     emptyMsg.textContent = "请至少选择一个字段";
-    emptyMsg.style.cssText = "color: #999; font-size: 13px; font-style: italic;";
+    emptyMsg.style.cssText =
+      "color: #999; font-size: 13px; font-style: italic;";
     container.appendChild(emptyMsg);
     return;
   }
@@ -274,7 +277,9 @@ function renderOrderSection(doc: Document) {
       const changedField = (inp as HTMLInputElement).dataset.field;
       const fieldConfig = fields.find((f) => f.field === changedField);
       if (fieldConfig) {
-        fieldConfig.header = (inp as HTMLInputElement).value || CSV_FIELD_DEFAULTS[changedField || ""];
+        fieldConfig.header =
+          (inp as HTMLInputElement).value ||
+          CSV_FIELD_DEFAULTS[changedField || ""];
         saveCsvFieldsConfig(fields);
       }
     };
@@ -316,10 +321,14 @@ function initCsvFieldConfig() {
 
 function bindPrefEvents() {
   addon.data.prefs?.window.document
-    ?.querySelector(`#zotero-prefpane-${config.addonRef}-target-highlight-color`)
+    ?.querySelector(
+      `#zotero-prefpane-${config.addonRef}-target-highlight-color`,
+    )
     ?.addEventListener("change", (event: Event) => {
       const input = event.target as HTMLInputElement;
-      ztoolkit.log(`Wordbook: target highlight color changed to ${input.value}`);
+      ztoolkit.log(
+        `Wordbook: target highlight color changed to ${input.value}`,
+      );
     });
 
   const menulist = addon.data.prefs?.window.document?.querySelector(

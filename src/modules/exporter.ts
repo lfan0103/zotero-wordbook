@@ -81,9 +81,7 @@ function createCsv(entries: WordbookEntry[]): string {
 
   const header = fields.map((f) => toCsvCell(f.header)).join(",");
   const rows = entries.map((entry) =>
-    fields
-      .map((f) => toCsvCell(entry[f.field]))
-      .join(","),
+    fields.map((f) => toCsvCell(entry[f.field])).join(","),
   );
   return [header, ...rows].join("\n") + "\n";
 }
@@ -147,7 +145,8 @@ async function showExportConfirmDialog(
         innerHTML: getString("dialog-description", {
           args: { count: String(itemsWithAttachments.length) },
         }),
-        style: "margin: 4px 0; color: #666; display: block; width: 100%; white-space: nowrap;",
+        style:
+          "margin: 4px 0; color: #666; display: block; width: 100%; white-space: nowrap;",
       },
     },
     true,
@@ -160,7 +159,8 @@ async function showExportConfirmDialog(
       tag: "hr",
       namespace: "html",
       properties: {
-        style: "width: 100%; border: none; border-top: 1px solid #ddd; display: block; margin: 8px 0;",
+        style:
+          "width: 100%; border: none; border-top: 1px solid #ddd; display: block; margin: 8px 0;",
       },
     },
     true,
@@ -197,7 +197,8 @@ async function showExportConfirmDialog(
         },
         properties: {
           innerHTML: title,
-          style: "font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 300px;",
+          style:
+            "font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 300px;",
           title: title,
         },
       },
@@ -313,7 +314,10 @@ export async function exportSelectedWordbook(
     return 0;
   }
 
-  const selectedItems = await showExportConfirmDialog(win, itemsWithAttachments);
+  const selectedItems = await showExportConfirmDialog(
+    win,
+    itemsWithAttachments,
+  );
   if (selectedItems === false) {
     return false;
   }

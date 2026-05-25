@@ -39,9 +39,7 @@ async function getAttachmentFullText(
   }
 
   try {
-    const result = (await Zotero.PDFWorker.getFullText(
-      attachment.id,
-    )) as {
+    const result = (await Zotero.PDFWorker.getFullText(attachment.id)) as {
       text: string;
       extractedPages: number;
       totalPages: number;
@@ -107,7 +105,9 @@ function extractSentence(fullText: string, highlight: string): string {
   for (let i = localIdx - 1; i >= 0; i--) {
     if (
       /[.!?]/.test(paragraph[i]) &&
-      (i + 1 >= paragraph.length || paragraph[i + 1] === " " || paragraph[i + 1] === "\n")
+      (i + 1 >= paragraph.length ||
+        paragraph[i + 1] === " " ||
+        paragraph[i + 1] === "\n")
     ) {
       sentStart = i + 2;
       break;
@@ -126,14 +126,12 @@ function extractSentence(fullText: string, highlight: string): string {
   }
 
   let sentEnd = paragraph.length;
-  for (
-    let i = localIdx + normHighlight.length;
-    i < paragraph.length;
-    i++
-  ) {
+  for (let i = localIdx + normHighlight.length; i < paragraph.length; i++) {
     if (
       /[.!?]/.test(paragraph[i]) &&
-      (i + 1 === paragraph.length || paragraph[i + 1] === " " || paragraph[i + 1] === "\n")
+      (i + 1 === paragraph.length ||
+        paragraph[i + 1] === " " ||
+        paragraph[i + 1] === "\n")
     ) {
       sentEnd = i + 1;
       break;

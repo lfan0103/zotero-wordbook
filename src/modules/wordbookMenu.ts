@@ -1,7 +1,4 @@
-import {
-  exportCurrentWordbook,
-  exportSelectedWordbook,
-} from "./exporter";
+import { exportCurrentWordbook, exportSelectedWordbook } from "./exporter";
 import { getString } from "../utils/locale";
 
 const MENU_CONTAINER_ID = "zotero-wordbook-menu";
@@ -35,10 +32,7 @@ function showAlertDialog(
     },
   });
 
-  dialog
-    .addButton("OK", "ok")
-    .setDialogData(dialogData)
-    .open(title);
+  dialog.addButton("OK", "ok").setDialogData(dialogData).open(title);
 
   // Fire and forget; no need to await
   dialogData.unloadLock.promise.catch(() => {});
@@ -85,13 +79,19 @@ export function registerWordbookMenu(win: _ZoteroTypes.MainWindow): void {
       } else {
         showAlertDialog(
           win,
-          getString("alert-export-success", { args: { count: String(exportedCount) } }),
+          getString("alert-export-success", {
+            args: { count: String(exportedCount) },
+          }),
           title,
         );
       }
     } catch (error) {
       Zotero.logError(error as Error);
-      showAlertDialog(win, getString("alert-export-error"), getString("dialog-title"));
+      showAlertDialog(
+        win,
+        getString("alert-export-error"),
+        getString("dialog-title"),
+      );
     }
   });
 
@@ -109,13 +109,19 @@ export function registerWordbookMenu(win: _ZoteroTypes.MainWindow): void {
       } else {
         showAlertDialog(
           win,
-          getString("alert-export-success", { args: { count: String(exportedCount) } }),
+          getString("alert-export-success", {
+            args: { count: String(exportedCount) },
+          }),
           title,
         );
       }
     } catch (error) {
       Zotero.logError(error as Error);
-      showAlertDialog(win, getString("alert-export-error"), getString("dialog-title"));
+      showAlertDialog(
+        win,
+        getString("alert-export-error"),
+        getString("dialog-title"),
+      );
     }
   });
 

@@ -103,11 +103,13 @@ exporter.ts
 #### 2. 新增设置项
 
 三处修改：
+
 1. **文案**：`addon/locale/{zh-CN,en-US}/preferences.ftl`
 2. **UI**：`addon/content/preferences.xhtml`（XUL/HTML 混合）
 3. **交互**：`src/modules/preferenceScript.ts`
 
 示例（新增复选框）：
+
 ```xml
 <!-- preferences.xhtml -->
 <hbox align="center" style="margin: 8px 0;" flex="1">
@@ -124,6 +126,7 @@ exporter.ts
 #### 3. 新增菜单项
 
 在 `src/modules/wordbookMenu.ts` 中：
+
 ```typescript
 const itemNew = doc.createXULElement("menuitem");
 itemNew.setAttribute("label", getString("menuitem-new-label"));
@@ -136,6 +139,7 @@ menupopup.appendChild(itemNew);
 #### 4. 新增本地化文案
 
 在 `addon/locale/zh-CN/addon.ftl`：
+
 ```fluent
 menuitem-new-label = 新功能
 ```
@@ -146,22 +150,24 @@ menuitem-new-label = 新功能
 
 Zotero 使用 XUL（XML User Interface Language），和 HTML 混合使用：
 
-| 场景 | 元素类型 | 创建方式 |
-|------|---------|---------|
-| 菜单、工具栏 | XUL | `doc.createXULElement("menu")` |
-| 对话框内容 | HTML | `doc.createElement("div")` |
-| 表单控件 | HTML | `doc.createElement("input")` |
+| 场景         | 元素类型 | 创建方式                       |
+| ------------ | -------- | ------------------------------ |
+| 菜单、工具栏 | XUL      | `doc.createXULElement("menu")` |
+| 对话框内容   | HTML     | `doc.createElement("div")`     |
+| 表单控件     | HTML     | `doc.createElement("input")`   |
 
 ### 2. 偏好存储
 
 简单值（字符串、布尔）：
+
 ```typescript
 // 使用 prefs.ts 封装
-getPref("targetHighlightColor");  // 读取
-setPref("targetHighlightColor", "#aaaaaa");  // 写入
+getPref("targetHighlightColor"); // 读取
+setPref("targetHighlightColor", "#aaaaaa"); // 写入
 ```
 
 复杂对象（如 CSV 字段配置）：
+
 ```typescript
 // JSON 序列化后存储
 const config = JSON.stringify(fields);
@@ -171,6 +177,7 @@ Zotero.Prefs.set("extensions.zotero.wordbook.csvFieldConfig", config, true);
 ### 3. ztoolkit.Dialog
 
 创建对话框：
+
 ```typescript
 const dialog = new ztoolkit.Dialog(rows, cols);
 dialog.addCell(row, col, { tag: "p", ... }, mergeCol);
@@ -179,6 +186,7 @@ dialog.setDialogData(dialogData).open("标题");
 ```
 
 **注意**：
+
 - checkbox 必须通过 `addCell` 独立添加，ztoolkit 才能追踪状态
 - `mergeCol=true` 让元素跨列
 - 使用 `dialogData[id]` 获取 checkbox 状态
@@ -186,6 +194,7 @@ dialog.setDialogData(dialogData).open("标题");
 ### 4. 颜色处理
 
 标准化比较：
+
 ```typescript
 function normalizeColor(color: string): string {
   return color.trim().toLowerCase();
@@ -225,12 +234,14 @@ npm run build    # 生产构建（生成 .scaffold/build/*.xpi）
 ```
 SyntaxError: The requested module 'node:util' does not provide an export named 'styleText'
 ```
+
 **原因**：Node 版本过低（< 20）
 **解决**：`nvm use 22`
 
 #### 偏好不保存
 
 **检查点**：
+
 - `getPref` 的 key 是否在 `PluginPrefsMap` 中定义
 - 复杂对象是否已 JSON 序列化
 - 是否通过 `Zotero.Prefs.set` 的第三个参数 `true`（用户偏好）
@@ -238,6 +249,7 @@ SyntaxError: The requested module 'node:util' does not provide an export named '
 #### UI 不生效
 
 **检查点**：
+
 - ftl 文件是否包含新 key
 - XHTML 是否通过构建（检查 `.scaffold/build`）
 - CSS 是否被覆盖（使用 `!important` 或更具体的选择器）
