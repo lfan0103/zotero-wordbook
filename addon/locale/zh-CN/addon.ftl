@@ -1,0 +1,14 @@
+startup-begin = Zotero Wordbook 正在加载
+startup-finish = Zotero Wordbook 已就绪
+menuitem-label = 单词本
+menuitem-current-label = 从当前文档导出
+menuitem-selected-label = 从选中条目导出
+dialog-title = 导出单词本
+dialog-description = 发现 { $count } 个条目，请选择要导出的条目：
+dialog-confirm = 确认导出
+dialog-cancel = 取消
+alert-export-success = 已成功导出 { $count } 个单词
+alert-export-canceled = 已取消导出
+alert-export-none = 未找到符合要求的标注，请检查高亮颜色设置。
+alert-export-error = 导出失败，请查看错误控制台了解详情。
+prefs-title = Wordbook
