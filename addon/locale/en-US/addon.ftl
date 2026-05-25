@@ -1,0 +1,14 @@
+startup-begin = Zotero Wordbook is loading
+startup-finish = Zotero Wordbook is ready
+menuitem-label = Wordbook
+menuitem-current-label = Export from Current Document
+menuitem-selected-label = Export from Selected Items
+dialog-title = Export Wordbook
+dialog-description = Found { $count } items, please select which to export:
+dialog-confirm = Export
+dialog-cancel = Cancel
+alert-export-success = Successfully exported { $count } words
+alert-export-canceled = Export canceled
+alert-export-none = No matching highlights found. Please check your highlight color setting.
+alert-export-error = Export failed. Please check the error console for details.
+prefs-title = Wordbook
